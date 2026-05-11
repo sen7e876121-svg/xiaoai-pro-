@@ -1,0 +1,9 @@
+# get_mi_info.py 运行依赖
+# Python 版本要求：>= 3.9（推荐 3.10+，支持新式类型标注）
+#
+# 安装：
+#   macOS/Linux:  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+#   Windows PS:   python -m venv .venv; .\.venv\Scripts\Activate.ps1; pip install -r requirements.txt
+
+miservice_fork>=2.3.0
+aiohttp>=3.9.0
