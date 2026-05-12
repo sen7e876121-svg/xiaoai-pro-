@@ -1,0 +1,12 @@
+{
+  "hardware": "xiaomi.wifispeaker.lx06",
+  "account": "<YOUR_MI_ACCOUNT>",
+  "password": "<YOUR_MI_PASSWORD>",
+  "mi_did": "<YOUR_MI_DID>",
+  "mi_token": "<YOUR_MI_TOKEN>",
+  "openai_key": "<YOUR_OPENAI_API_KEY>",
+  "bot": "chatgptapi",
+  "mute_xiaoai": true,
+  "keyword": ["帮我", "请问", "小爱同学"],
+  "prompt": "你现在是一个贴心的智能语音助手。请用简短、口语化、接地气的中文回答我的问题。回答中绝对不要包含 Markdown 格式、星号或代码，因为你的回答将被转化为语音播报。"
+}
