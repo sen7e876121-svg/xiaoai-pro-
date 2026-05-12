@@ -1,0 +1,26 @@
+# =============================================================================
+# xiaogpt 小爱音箱 + LLM 部署方案
+# -----------------------------------------------------------------------------
+# 镜像作者：https://github.com/yihong0618/xiaogpt
+# 适用平台：macOS (Apple Silicon / Intel) / Linux / Windows 10/11 (via WSL2)
+#
+# 启动：
+#   macOS / Linux:      docker compose up -d
+#   Windows (WSL2):     docker compose up -d
+#
+# 注意：network_mode: host 让容器共享宿主机网络栈，便于与同局域网内的
+# 小爱音箱 UDP 直连通信。该模式在 Linux / macOS (OrbStack/Colima) 下工作最佳；
+# Docker Desktop for Mac/Windows 对 host 网络支持有限，若遇到问题可改用
+# bridge + ports 暴露，或改用 OrbStack / Colima。
+# =============================================================================
+
+services:
+  xiaogpt:
+    image: yihong0618/xiaogpt:latest
+    container_name: xiaogpt
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      # 宿主机当前目录下的 config.json 挂载到容器内 /app/config.json
+      # 修改本地 config.json 后重启容器即可生效：docker compose restart xiaogpt
+      - ./config.json:/app/config.json
