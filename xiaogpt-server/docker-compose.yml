@@ -1,0 +1,31 @@
+# =============================================================================
+# xiaogpt 小爱音箱 + LLM 部署方案（含 token 持久化防风控）
+# -----------------------------------------------------------------------------
+# 镜像：https://github.com/yihong0618/xiaogpt
+# 适用平台：macOS (Apple Silicon / Intel) / Linux / Windows 10/11 (via WSL2)
+#
+# 启动：docker compose up -d
+# 日志：docker compose logs -f xiaogpt
+# 重启：docker compose restart xiaogpt（改完 config.json 后）
+#
+# ⚠️ 重要修改（2024-05 风控事件后新增）：
+#   挂载 .mi.token 到容器内，让 miservice 复用已有登录态，
+#   避免容器每次重启都执行全新登录，防止再次触发 Mina WAF 风控。
+# =============================================================================
+
+services:
+  xiaogpt:
+    image: yihong0618/xiaogpt:latest
+    container_name: xiaogpt
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      # 配置文件（含 mi_did / mi_token / openai_key 等凭据）
+      - ./config.json:/app/config.json
+      # ===【关键】Token 持久化 ===
+      # 首次启动后 miservice 会把 serviceToken 写入此文件
+      # 后续重启直接复用，不再发登录请求，从根源避免风控
+      # 如果你本机还没有 .mi.token，先 touch 一个空文件：
+      #   macOS/Linux:  touch .mi.token
+      #   Windows PS:   New-Item .mi.token -ItemType File
+      - ./.mi.token:/root/.mi.token
